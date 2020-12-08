@@ -8,9 +8,9 @@ DNS_SERVER_IP = "10.2.1.1"  # Your local IP
 BPF_FILTER = "udp port 53 and ip dst " + DNS_SERVER_IP
 
 
-def dns_responder(local_ip, str):
+def dns_responder(local_ip):
 
-    def forward_dns(orig_pkt, IP):
+    def forward_dns(orig_pkt):
         print("Forwarding: " + orig_pkt[DNSQR].qname)
         response = sr1(
             IP(dst='10.3.2.1')/
@@ -23,7 +23,7 @@ def dns_responder(local_ip, str):
         send(resp_pkt, verbose=0)
         return "Responding to " + orig_pkt[IP].src
 
-    def get_response(pkt, IP):
+    def get_response(pkt):
         if (
             DNS in pkt and
             pkt[DNS].opcode == 0 and
