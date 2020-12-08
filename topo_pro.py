@@ -44,7 +44,7 @@ def perfTest():
     "Create network and run simple performance test"
     CONTROLLER_IP='10.0.0.1'
     topo = LinearTopo(k=4)
-    net =Mininet(topo=topo, host=CPULimitedHost, link=TCLink)
+    net = Mininet(topo=topo, build=False) # host=CPULimitedHost, link=TCLink)
     net.addController( 'c0', controller=RemoteController, ip=CONTROLLER_IP, port=6633)
     net.start()
     print "Dumping host connections"
