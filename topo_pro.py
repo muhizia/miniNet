@@ -1,7 +1,7 @@
 #!/usr/bin/python
 from mininet.topo import Topo
 from mininet.net import Mininet
-from mininet.node import CPULimitedHost
+from mininet.node import CPULimitedHost, Controller, RemoteController, Node
 from mininet.link import TCLink
 from mininet.util import irange,dumpNodeConnections
 from mininet.log import setLogLevel
@@ -42,8 +42,10 @@ class LinearTopo(Topo):
         #     lastSwitch = switch
 def perfTest():
     "Create network and run simple performance test"
+    CONTROLLER_IP='10.0.0.1'
     topo = LinearTopo(k=4)
     net =Mininet(topo=topo, host=CPULimitedHost, link=TCLink)
+    net.addController( 'c0', controller=RemoteController, ip=CONTROLLER_IP, port=6633)
     net.start()
     print "Dumping host connections"
     dumpNodeConnections(net.hosts)
